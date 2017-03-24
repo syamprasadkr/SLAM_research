@@ -60,5 +60,5 @@ void WorldState::predict_cmatrix(array <array <float, dim>, dim>& a, array <arra
         }
     }
     print_cmatrix();
-
+    // Equation 7 completed
 }

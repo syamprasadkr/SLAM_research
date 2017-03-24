@@ -18,7 +18,6 @@ void transpose(array <array <float, dim>, dim>& a, array <array <float, dim>, di
             b[j][i] = a[i][j];
         }
     }
-    return void();
 
 }
 
@@ -95,7 +94,7 @@ void print_ffamily(){
             cout << endl;
     }
 
-    cout << "F transposed Matrix" << endl;
+    cout << "F Transpose Matrix" << endl;
     for (int i = 0; i < dim; i++){
             for (int j = 0; j < 3; j++){
                 printf("%0.2f ", f_transpose[i][j]);
