@@ -19,10 +19,18 @@ int main(){
     bool run(true);
     array <float, 3> rob_vel;
     array <float, 3> rob_pose;
-    float dt = 0.0;
+    float dt = 1.0;
     std::clock_t t1;
     std::clock_t t2;
-
+    //f = {{0}};
+    //f_transpose = {{0}};
+    /*f[0][0] = 1;
+    f[1][1] = 1;
+    f[2][2] = 1;
+    f_transpose[0][0] = 1;
+    f_transpose[1][1] = 1;
+    f_transpose[2][2] = 1;*/
+    print_ffamily();
     // Initialize Robot
     Robot segway_rmp(0.0, 0.0, 0.0);
     // Initialize World

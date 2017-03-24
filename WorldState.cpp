@@ -42,3 +42,23 @@ void WorldState::predict_wstate(float a, float b, float c){
     w_state[1] = b;
     w_state[2] = c;
 }
+
+void WorldState::predict_cmatrix(array <array <float, dim>, dim>& a, array <array <float, dim>, dim>& b,
+                                 array <array <float, dim>, dim>& c ){
+
+    // Noise not taken into account.
+    mat_mult(covar_matrix, b, temp);
+    covar_matrix = temp;
+    mat_mult(a, covar_matrix, temp);
+    covar_matrix = temp;
+    //print_cmatrix();
+    for (int i = 0; i < dim; i++){
+
+        for (int j = 0; j < dim; j++){
+
+            covar_matrix[i][j] += c[i][j];
+        }
+    }
+    print_cmatrix();
+
+}

@@ -10,13 +10,16 @@ class WorldState{
         void print_wstate();
         void print_cmatrix();
         void predict_wstate(float, float, float);
-        void predict_cmatrix();
+        void predict_cmatrix(array <array <float, dim>, dim>&, array <array <float, dim>, dim>&,
+                             array <array <float, dim>, dim>&);
 
     protected:
 
     private:
         array <float, dim> w_state;
         array <array <float, dim>, dim> covar_matrix;
+        array <array <float, dim>, dim> temp{{}};
+        //array <array <float, dim>, dim> temp2{{}};
 
 };
 
