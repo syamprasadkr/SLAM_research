@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cmath>
+#include <vector>
 #include <ctime>
 #include <chrono>
 #include <thread>
@@ -19,6 +20,7 @@ int main(){
     bool run(true);
     array <float, 3> rob_vel;
     array <float, 3> rob_pose;
+    array <array <float, 1>, 2> sen_obs;
     float dt = 1.0;
     std::clock_t t1;
     std::clock_t t2;
@@ -30,7 +32,7 @@ int main(){
     f_transpose[0][0] = 1;
     f_transpose[1][1] = 1;
     f_transpose[2][2] = 1;*/
-    print_ffamily();
+    //print_ffamily();
     // Initialize Robot
     Robot segway_rmp(0.0, 0.0, 0.0);
     // Initialize World
@@ -47,7 +49,7 @@ int main(){
     //cout << dim << endl;
     //segway_world.print_wstate();
     //segway_world.print_cmatrix();
-
+    Sensor rgbd_camera;
 
     while (run){
 
@@ -58,6 +60,10 @@ int main(){
         //cout << rob_pose[2];
         segway_rmp.motion_model(dt, segway_world);
         //segway_world.print_wstate();
+
+        sen_obs = rgbd_camera.get_measurement();
+        rgbd_camera.marker_pos(rob_pose[0], rob_pose[1], rob_pose[2], segway_world);
+        //cout << sen_obs[0][0];
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         t2 = std::clock();

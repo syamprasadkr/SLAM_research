@@ -19,7 +19,7 @@ Robot::Robot(float a, float b, float c){
 
 void Robot::generate_q_matrix(){
 
-    array <array <float, 3>, dim> temp2{{}};
+    array <array <float, dim>, 3> temp2{{}};
     for (int i = 0; i < 3; i++){
 
         for (int j = 0; j < dim; j++){
@@ -31,6 +31,14 @@ void Robot::generate_q_matrix(){
             }
         }
     }
+
+    /*for (int i = 0; i < 3; i++){
+
+        for (int j = 0; j < dim; j++){
+                cout << temp2[i][j] << " ";
+        }
+        cout << endl;
+    }*/
 
     for (int i = 0; i < dim; i++){
 

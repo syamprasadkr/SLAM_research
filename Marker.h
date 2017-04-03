@@ -5,7 +5,11 @@
 class Marker{
 
     public:
-        Marker(int);
+        Marker(int, float, float);
+        int marker_id();
+        float marker_x();
+        float marker_y();
+
 
     protected:
 

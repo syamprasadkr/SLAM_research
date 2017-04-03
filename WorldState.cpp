@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cmath>
+#include <vector>
 #include "global.h"
 #include "WorldState.h"
 #include "Robot.h"
@@ -52,6 +53,7 @@ void WorldState::predict_cmatrix(array <array <float, dim>, dim>& a, array <arra
     mat_mult(a, covar_matrix, temp);
     covar_matrix = temp;
     //print_cmatrix();
+    //print_matrix1(c);
     for (int i = 0; i < dim; i++){
 
         for (int j = 0; j < dim; j++){
@@ -59,6 +61,22 @@ void WorldState::predict_cmatrix(array <array <float, dim>, dim>& a, array <arra
             covar_matrix[i][j] += c[i][j];
         }
     }
-    print_cmatrix();
+    //print_cmatrix();
     // Equation 7 completed
+}
+
+void WorldState::update_wstate(vector <Marker>& marker_vec){
+
+    int id;
+    float x;
+    float y;
+    if (!marker_vec.empty()){
+
+        id = marker_vec.back().marker_id();
+        x = marker_vec.back().marker_x();
+        y = marker_vec.back().marker_y();
+        w_state[3 + 2 * id] = x;
+        w_state[4 + 2 * id] = y;
+        //print_wstate();
+    }
 }

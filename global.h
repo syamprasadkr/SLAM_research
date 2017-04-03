@@ -2,12 +2,14 @@
 #define GLOBAL_H_INCLUDED
 #include <array>
 #include <cmath>
+#include <vector>
 #define PI 3.14159
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::array;
+using std::vector;
 
 static constexpr const int marker_num = 10;
 static constexpr const int dim = (2 * marker_num) + 3;

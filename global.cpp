@@ -52,7 +52,7 @@ void generate_noise_matrix(array <array <float, 3>, 3>& a){
                 a[i][j] = (exp(-(pow(h1[i][j], 2) + pow(h2[i][j], 2))/ (2 * pow(sigma, 2)))) / (sqrt(2 * PI * pow(sigma, 2))) ;
             }
         }
-
+        //print_matrix2(a);
 }
 
 

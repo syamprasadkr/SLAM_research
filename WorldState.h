@@ -1,6 +1,7 @@
 #ifndef WORLDSTATE_H
 #define WORLDSTATE_H
 #include "global.h"
+#include "Marker.h"
 
 
 class WorldState{
@@ -12,6 +13,7 @@ class WorldState{
         void predict_wstate(float, float, float);
         void predict_cmatrix(array <array <float, dim>, dim>&, array <array <float, dim>, dim>&,
                              array <array <float, dim>, dim>&);
+        void update_wstate(vector <Marker>&);
 
     protected:
 

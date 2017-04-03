@@ -8,10 +8,26 @@
 #include "Marker.h"
 
 
-Marker::Marker(int idno){
+Marker::Marker(int idno, float x, float y){
 
     //ctor
     id = idno;
-    mx = 0.0;
-    my = 0.0;
+    mx = x;
+    my = y;
 }
+
+int Marker::marker_id(){
+
+    return id;
+}
+
+float Marker::marker_x(){
+
+    return mx;
+}
+
+float Marker::marker_y(){
+
+    return my;
+}
+
