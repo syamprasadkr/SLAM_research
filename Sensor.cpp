@@ -33,6 +33,8 @@ array <array <float, 1>, 2> Sensor::get_measurement(){
 array <array <float, 1>, 2> Sensor::marker_pos(float x, float y, float theta, WorldState& segway_world){
     float m_x;
     float m_y;
+    float delta_x;
+    float delta_y;
     m_x = x + range * cos((theta + phi) * PI / 180);
     m_y = y + range * sin((theta + phi) * PI / 180);
 
@@ -52,11 +54,27 @@ array <array <float, 1>, 2> Sensor::marker_pos(float x, float y, float theta, Wo
                 /*Marker *m = new Marker(last_id, m_x, m_y);
                 marker_vec.push_back(*m);
                 delete m;*/
-                marker_vec.emplace_back(Marker(last_id, m_x, m_y));
+
+                // Note that emplace_back will forward the arguments to appropriate constructor; in this case, Marker.
+                marker_vec.emplace_back(last_id, m_x, m_y);
                 last_id++;
                 segway_world.update_wstate(marker_vec);
                 //cout << marker_vec[0].marker_x();
             }
 
     }
+
+    delta_x = m_x - x;
+    delta_y = m_y - y;
+
+    observation_model(delta_x, delta_y, theta);
+
+}
+
+
+void Sensor::observation_model(float delta_x, float delta_y, float theta){
+
+    float q = pow(delta_x, 2) + pow(delta_y, 2);
+    z_predicted[0][0] = sqrt(q);
+    z_predicted[0][1] = ((atan2(delta_y, delta_x)) * (180 / PI)) - theta;  // Correct dr_slam_report_2.pdf
 }

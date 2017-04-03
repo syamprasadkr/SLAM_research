@@ -56,12 +56,13 @@ int main(){
         t1 = std::clock();
         rob_vel = segway_rmp.get_velocities();
         //cout << rob_vel[2];
-        rob_pose = segway_rmp.get_pose();
+        //rob_pose = segway_rmp.get_pose();
         //cout << rob_pose[2];
         segway_rmp.motion_model(dt, segway_world);
         //segway_world.print_wstate();
 
         sen_obs = rgbd_camera.get_measurement();
+        rob_pose = segway_rmp.get_pose();
         rgbd_camera.marker_pos(rob_pose[0], rob_pose[1], rob_pose[2], segway_world);
         //cout << sen_obs[0][0];
 
