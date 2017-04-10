@@ -13,14 +13,15 @@
 
 
 
-int main(){
-
-
+int main()
+{
     cout << "Hello, Welcome to SLAM!!" << endl;
     bool run(true);
     array <float, 3> rob_vel;
     array <float, 3> rob_pose;
-    array <array <float, 1>, 2> sen_obs;
+    array <array <float, 1>, 2> z_obs;
+    array <array <float, 1>, 2> z_predicted;
+    array <array <float, 2>, dim> kalman_gain;
     float dt = 1.0;
     std::clock_t t1;
     std::clock_t t2;
@@ -38,9 +39,12 @@ int main(){
     // Initialize World
     array <float, dim> w_state = {0};
     array <array <float, dim>, dim> covar_matrix = {{0}};
-    for (int i = 3; i < dim; i++){
-        for (int j =3; j < dim; j++){
-            if (i == j){
+    for (int i = 3; i < dim; i++)
+    {
+        for (int j =3; j < dim; j++)
+        {
+            if (i == j)
+            {
                 covar_matrix[i][j] = 10000000;
             }
         }
@@ -51,7 +55,8 @@ int main(){
     //segway_world.print_cmatrix();
     Sensor rgbd_camera;
 
-    while (run){
+    while (run)
+    {
 
         t1 = std::clock();
         rob_vel = segway_rmp.get_velocities();
@@ -61,10 +66,11 @@ int main(){
         segway_rmp.motion_model(dt, segway_world);
         //segway_world.print_wstate();
 
-        sen_obs = rgbd_camera.get_measurement();
+        z_obs = rgbd_camera.get_measurement();
         rob_pose = segway_rmp.get_pose();
-        rgbd_camera.marker_pos(rob_pose[0], rob_pose[1], rob_pose[2], segway_world);
-        //cout << sen_obs[0][0];
+        z_predicted = rgbd_camera.marker_pos(rob_pose[0], rob_pose[1], rob_pose[2], segway_world);
+        //cout << z_obs[0][0];
+        kalman_gain = rgbd_camera.kalman_gain(segway_world);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         t2 = std::clock();

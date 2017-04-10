@@ -10,6 +10,8 @@ class WorldState{
         WorldState(array <float, dim>& a, array <array <float, dim>, dim>& b);
         void print_wstate();
         void print_cmatrix();
+        array <float, dim> get_wstate();
+        array <array <float, dim>, dim> get_cmatrix();
         void predict_wstate(float, float, float);
         void predict_cmatrix(array <array <float, dim>, dim>&, array <array <float, dim>, dim>&,
                              array <array <float, dim>, dim>&);

@@ -10,7 +10,7 @@ class Robot{
         array <float, 3> get_pose();
         void motion_model(float, WorldState&);
         void jacobian_motion(float, WorldState&);
-        void generate_q_matrix();
+        void generate_r_matrix();
 
 
     protected:
@@ -24,10 +24,10 @@ class Robot{
         float omega_t = 0.0;
         //Consider removing jacobian_matrix_low
         array <array <float, 3>, 3> jacobian_matrix_low;
-        array <array <float, 3>, 3> q_matrix_low{{}};
+        array <array <float, 3>, 3> r_matrix_low{{}};
         array <array <float, dim>, dim> jacobian{{}};
         array <array <float, dim>, dim> jacobian_transposed{{}};
-        array <array <float, dim>, dim> q_matrix{{}};
+        array <array <float, dim>, dim> r_matrix{{}};
         // Consider making global
         array <float, 3> ret_matrix;
 

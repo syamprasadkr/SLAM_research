@@ -10,43 +10,57 @@
 
 
 
-WorldState::WorldState(array <float, dim>& a, array <array <float, dim>, dim>& b){
+WorldState::WorldState(array <float, dim>& a, array <array <float, dim>, dim>& b)
+{
     //ctor
     w_state = a;
     covar_matrix = b;
 }
 
-void WorldState::print_wstate(){
-
+void WorldState::print_wstate()
+{
     cout << "World State:" << endl;
-    for (int i = 0; i < dim; i++){
+    for (int i = 0; i < dim; i++)
+    {
         printf("%0.2f ", w_state[i]);
     }
     cout << endl;
 }
 
-void WorldState::print_cmatrix(){
-
+void WorldState::print_cmatrix()
+{
     cout << "Covariance Matrix:" << endl;
-    for (int i = 0; i < dim; i++){
-            for (int j = 0; j < dim; j++){
-                printf("%0.2f ", covar_matrix[i][j]);
+    for (int i = 0; i < dim; i++)
+    {
+        for (int j = 0; j < dim; j++)
+        {
+            printf("%0.2f ", covar_matrix[i][j]);
 
-            }
-            cout << endl;
+        }
+        cout << endl;
     }
 }
 
-void WorldState::predict_wstate(float a, float b, float c){
+array <float, dim> WorldState::get_wstate()
+{
+    return w_state;
+}
 
+array <array <float, dim>, dim> WorldState::get_cmatrix()
+{
+    return covar_matrix;
+}
+
+void WorldState::predict_wstate(float a, float b, float c)
+{
     w_state[0] = a;
     w_state[1] = b;
     w_state[2] = c;
 }
 
 void WorldState::predict_cmatrix(array <array <float, dim>, dim>& a, array <array <float, dim>, dim>& b,
-                                 array <array <float, dim>, dim>& c ){
-
+                                 array <array <float, dim>, dim>& c )
+{
     // Noise not taken into account.
     mat_mult(covar_matrix, b, temp);
     covar_matrix = temp;
@@ -54,10 +68,10 @@ void WorldState::predict_cmatrix(array <array <float, dim>, dim>& a, array <arra
     covar_matrix = temp;
     //print_cmatrix();
     //print_matrix1(c);
-    for (int i = 0; i < dim; i++){
-
-        for (int j = 0; j < dim; j++){
-
+    for (int i = 0; i < dim; i++)
+    {
+        for (int j = 0; j < dim; j++)
+        {
             covar_matrix[i][j] += c[i][j];
         }
     }
@@ -65,13 +79,13 @@ void WorldState::predict_cmatrix(array <array <float, dim>, dim>& a, array <arra
     // Equation 7 completed
 }
 
-void WorldState::update_wstate(vector <Marker>& marker_vec){
-
+void WorldState::update_wstate(vector <Marker>& marker_vec)
+{
     int id;
     float x;
     float y;
-    if (!marker_vec.empty()){
-
+    if (!marker_vec.empty())
+    {
         id = marker_vec.back().marker_id();
         x = marker_vec.back().marker_x();
         y = marker_vec.back().marker_y();
