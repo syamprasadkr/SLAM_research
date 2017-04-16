@@ -19,14 +19,14 @@ static array <array <float, 3>, 3> h1 = {{{{-1, 0, 1}}, {{-1, 0, 1}}, {{-1, 0, 1
 static array <array <float, 3>, 3> h2 = {{{{-1, -1, -1}}, {{0, 0, 0}}, {{1, 1, 1}}}};
 static array <array <float, 3>, dim> f_transpose = {{{1}, {0, 1}, {0, 0, 1}}};
 static array <array <float, dim>, 3> f = {{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}};
-extern void transpose(array <array <float, dim>, dim>&, array <array <float, dim>, dim>&);
-extern void transpose2(array <array <float, dim>, 2>& a, array <array <float, 2>, dim>& b);
-extern void mat_mult(array <array <float, dim>, dim>&, array <array <float, dim>, dim>&, array <array <float, dim>, dim>&);
+template <size_t M, size_t N>
+extern void transpose(array <array <float, N>, M>&, array <array <float, M>, N>&);
+template <size_t M, size_t N, size_t P>
+extern void mat_mult(array <array <float, N>, M>&, array <array <float, P>, N>&, array <array <float, P>, M>&);
+extern void mat_invert(array <array <float, 2>, 2>&, array <array <float, 2>, 2>&);
 extern void generate_noise_matrix(array <array <float, 3>, 3>&);
 extern void generate_noise_matrix2(array <array <float, 2>, 2>& a);
-extern void print_matrix1(array <array <float, dim>, dim>&);
-extern void print_matrix2(array <array <float, 3>, 3>&);
-extern void print_ffamily();
-
+template <size_t M, size_t N>
+extern void print_matrix(array <array <float, N>, M>&);
 
 #endif // GLOBAL_H_INCLUDED

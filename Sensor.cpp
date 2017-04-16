@@ -99,15 +99,9 @@ void Sensor::jacobian_obs(float q, float delta_x, float delta_y, int curr_id)
     jacobian[1][2] = -q;
     jacobian[1][(3 + 2 * curr_id)] = -delta_y / q;
     jacobian[1][(4 + 2 * curr_id)] = delta_x / q;
+    //cout << "Jacobian\n";
+    //print_matrix<2, dim>(jacobian);
 
-    /*for (size_t i = 0; i < 2; i++)
-    {
-        for (size_t j = 0; j < dim; j++)
-        {
-            cout << jacobian[i][j] << " ";
-        }
-        cout << endl;
-    }*/
 }
 
 array <array <float, 2>, dim> Sensor::kalman_gain(WorldState& segway_world)
@@ -115,29 +109,13 @@ array <array <float, 2>, dim> Sensor::kalman_gain(WorldState& segway_world)
     array <array <float, dim>, dim> cmatrix = segway_world.get_cmatrix();
     array <array <float, 2>, dim> jacobian_transpose;
     array <array <float, 2>, dim> temp;
+    array <array <float, 2>, dim> kg;
     array <array <float, 2>, 2> mat_to_invert;
-    transpose2(jacobian, jacobian_transpose);
+    array <array <float, 2>, 2> inverted_mat;
 
-    for (int i = 0; i < dim; i++)
-    {
-        for (int j = 0; j < 2; j++)
-        {
-            for (int k = 0; k < dim; k++)
-            {
-                temp[i][j] += cmatrix[i][k] * jacobian_transpose[k][j];
-            }
-        }
-    }
-    for (int i = 0; i < 2; i++)
-    {
-        for (int j = 0; j < 2; j++)
-        {
-            for (int k = 0; k < dim; k++)
-            {
-                mat_to_invert[i][j] += jacobian[i][k] * temp[k][j];
-            }
-        }
-    }
+    transpose<2, dim>(jacobian, jacobian_transpose);
+    mat_mult(cmatrix, jacobian_transpose, temp);
+    mat_mult(jacobian, temp, mat_to_invert);
 
     for (size_t i = 0; i < 2; i++)
     {
@@ -147,5 +125,18 @@ array <array <float, 2>, dim> Sensor::kalman_gain(WorldState& segway_world)
         }
     }
 
+    //Invert matrix
+    mat_invert(mat_to_invert, inverted_mat);
+    //print mat_to_invert, inverted_mat, q_matrix
+    /*cout << "Mat_to_invert\n";
+    print_matrix(mat_to_invert);
+    cout << "Inverted Mat\n";
+    print_matrix(inverted_mat);
+    cout << "Q matrix\n";
+    print_matrix(q_matrix);*/
 
+    mat_mult(jacobian_transpose, inverted_mat, temp);
+    mat_mult(cmatrix, temp, kg);
+    //print_matrix(kg);
+    // Equation 15 complete
 }

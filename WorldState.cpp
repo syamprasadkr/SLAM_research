@@ -61,13 +61,13 @@ void WorldState::predict_wstate(float a, float b, float c)
 void WorldState::predict_cmatrix(array <array <float, dim>, dim>& a, array <array <float, dim>, dim>& b,
                                  array <array <float, dim>, dim>& c )
 {
-    // Noise not taken into account.
-    mat_mult(covar_matrix, b, temp);
+    // Noise taken into account.
+    mat_mult<dim, dim, dim>(covar_matrix, b, temp);
     covar_matrix = temp;
-    mat_mult(a, covar_matrix, temp);
+    mat_mult<dim, dim, dim>(a, covar_matrix, temp);
     covar_matrix = temp;
     //print_cmatrix();
-    //print_matrix1(c);
+    //print_matrix<dim, dim>(c);
     for (int i = 0; i < dim; i++)
     {
         for (int j = 0; j < dim; j++)

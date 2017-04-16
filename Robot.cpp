@@ -20,39 +20,9 @@ Robot::Robot(float a, float b, float c)
 void Robot::generate_r_matrix()
 {
     array <array <float, dim>, 3> temp2{{}};
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < dim; j++)
-        {
-            for (int k = 0; k < 3; k++)
-            {
-                temp2[i][j] += r_matrix_low[i][k] * f[k][j];
-            }
-        }
-    }
-
-    /*for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < dim; j++)
-        {
-                cout << temp2[i][j] << " ";
-        }
-        cout << endl;
-    }*/
-
-    for (int i = 0; i < dim; i++)
-    {
-        for (int j = 0; j < dim; j++)
-        {
-            for (int k = 0; k < 3; k++)
-            {
-
-                r_matrix[i][j] += f_transpose[i][k] * temp2[k][j];
-
-            }
-        }
-    }
-
+    // Create higher order R noise matrix
+    mat_mult(r_matrix_low, f, temp2);
+    mat_mult(f_transpose, temp2, r_matrix);
 }
 
 array <float, 3> Robot::get_velocities()
@@ -100,15 +70,15 @@ void Robot::jacobian_motion(float dt, WorldState& segway_world)
         jacobian[i][i] = 1;
     }
 
-    transpose(jacobian, jacobian_transposed);
+    transpose<dim, dim>(jacobian, jacobian_transposed);
     //cout << "Jacobian" << endl;
-    //print_matrix1(jacobian);
+    //print_matrix<dim, dim>(jacobian);
 
     //cout << "Transposed Jacobian" << endl;
-    //print_matrix1(jacobian_transposed);
+    //print_matrix<dim, dim>(jacobian_transposed);
 
     //cout << "R matrix" << endl;
-    //print_matrix2(r_matrix);
+    //print_matrix<dim, dim>(r_matrix);
 
 
     segway_world.predict_cmatrix(jacobian, jacobian_transposed, r_matrix);
