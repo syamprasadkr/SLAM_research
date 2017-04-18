@@ -94,3 +94,46 @@ void WorldState::update_wstate(vector <Marker>& marker_vec)
         //print_wstate();
     }
 }
+
+void WorldState::correct_wstate(array <array <float, 2>, dim>& kalman_gain,
+                                array <array <float, 1>, 2>& z_obs,
+                                array <array <float, 1>, 2>& z_predicted)
+{
+        array <array <float, 1>, 2> temp;
+        array <array <float, 1>, dim> temp2;
+        for (size_t i = 0; i < 2; i++)
+        {
+            temp[i][0] = z_obs[i][0] - z_predicted[i][0];
+        }
+        mat_mult(kalman_gain, temp, temp2);
+        for (size_t i = 0; i < dim; i++)
+        {
+            w_state[i] += temp2[i][0];
+        }
+        print_wstate();
+        // Equation 16 complete
+}
+
+void WorldState::correct_cmatrix(array <array <float, dim>, dim>& kt_ht)
+{
+    array <array <float, dim>, dim> identity{{}};
+    array <array <float, dim>, dim> temp;
+    array <array <float, dim>, dim> temp2;
+    for (size_t i = 0; i < dim; i++)
+    {
+        identity[i][i] = 1;
+    }
+    //print_matrix(identity);
+    for (size_t i = 0; i < dim; i++)
+    {
+        for (size_t j = 0; j < dim; j++)
+        {
+            temp[i][j] = identity[i][j] - kt_ht[i][j];
+        }
+    }
+    mat_mult(temp, covar_matrix, temp2);
+    //print_matrix(temp2);
+    covar_matrix = temp2;
+    print_cmatrix();
+    // Equation 17 complete
+}

@@ -139,4 +139,12 @@ array <array <float, 2>, dim> Sensor::kalman_gain(WorldState& segway_world)
     mat_mult(cmatrix, temp, kg);
     //print_matrix(kg);
     // Equation 15 complete
+    return kg;
+}
+
+array <array <float, dim>, dim> Sensor::calc_ktht(array <array <float, 2>, dim>& kg)
+{
+    array <array <float, dim>, dim> temp;
+    mat_mult(kg, jacobian, temp);
+    return temp;
 }

@@ -16,6 +16,9 @@ class WorldState{
         void predict_cmatrix(array <array <float, dim>, dim>&, array <array <float, dim>, dim>&,
                              array <array <float, dim>, dim>&);
         void update_wstate(vector <Marker>&);
+        void correct_wstate(array <array <float, 2>, dim>&, array <array <float, 1>, 2>&,
+                            array <array <float, 1>, 2>&);
+        void correct_cmatrix(array <array <float, dim>, dim>&);
 
     protected:
 

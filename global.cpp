@@ -66,6 +66,8 @@ template void mat_mult(array <array <float, 3>, dim>& a, array <array <float, di
 template void mat_mult(array <array <float, dim>, dim>& a, array <array <float, 2>, dim>& b, array <array <float, 2>, dim>& c);
 template void mat_mult(array <array <float, dim>, 2>& a, array <array <float, 2>, dim>& b, array <array <float, 2>, 2>& c);
 template void mat_mult(array <array <float, 2>, dim>& a, array <array <float, 2>, 2>& b, array <array <float, 2>, dim>& c);
+template void mat_mult(array <array <float, 2>, dim>& a, array <array <float, 1>, 2>& b, array <array <float, 1>, dim>& c);
+template void mat_mult(array <array <float, 2>, dim>& a, array <array <float, dim>, 2>& b, array <array <float, dim>, dim>& c);
 
 void mat_invert(array <array <float, 2>, 2>& a, array <array <float, 2>, 2>& b)
 {

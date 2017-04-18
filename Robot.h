@@ -1,7 +1,6 @@
 #ifndef ROBOT_H
 #define ROBOT_H
-
-
+#include "WorldState.h"
 class Robot{
 
     public:
@@ -11,6 +10,7 @@ class Robot{
         void motion_model(float, WorldState&);
         void jacobian_motion(float, WorldState&);
         void generate_r_matrix();
+        void update_pose(float, float, float);
 
 
     protected:

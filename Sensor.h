@@ -11,6 +11,7 @@ class Sensor{
         void observation_model(float, float, float, int);
         void jacobian_obs(float, float, float, int);
         array <array <float, 2>, dim> kalman_gain(WorldState&);
+        array <array <float, dim>, dim> calc_ktht(array <array <float, 2>, dim>&);
 
 
     protected:

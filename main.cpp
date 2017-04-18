@@ -22,6 +22,7 @@ int main()
     array <array <float, 1>, 2> z_obs;
     array <array <float, 1>, 2> z_predicted;
     array <array <float, 2>, dim> kalman_gain;
+    array <array <float, dim>, dim> kt_ht;
     float dt = 1.0;
     std::clock_t t1;
     std::clock_t t2;
@@ -65,7 +66,12 @@ int main()
         z_predicted = rgbd_camera.marker_pos(rob_pose[0], rob_pose[1], rob_pose[2], segway_world);
         //cout << z_obs[0][0];
         kalman_gain = rgbd_camera.kalman_gain(segway_world);
-
+        segway_world.correct_wstate(kalman_gain, z_obs, z_predicted);
+        kt_ht = rgbd_camera.calc_ktht(kalman_gain);
+        segway_world.correct_cmatrix(kt_ht);
+        w_state = segway_world.get_wstate();
+        segway_rmp.update_pose(w_state[0], w_state[1], w_state[2]);
+        // Basic architecture finished
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         t2 = std::clock();
         dt = float((t2 - t1) / (double(CLOCKS_PER_SEC)));

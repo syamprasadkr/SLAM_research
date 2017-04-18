@@ -83,3 +83,10 @@ void Robot::jacobian_motion(float dt, WorldState& segway_world)
 
     segway_world.predict_cmatrix(jacobian, jacobian_transposed, r_matrix);
 }
+
+void Robot::update_pose(float a, float b, float c)
+{
+    x = a;
+    y = b;
+    theta = c;
+}
