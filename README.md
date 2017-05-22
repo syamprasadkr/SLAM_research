@@ -7,7 +7,7 @@ The objective was to develop an understanding of how SLAM works. Initially, an e
 This code was developed and tested using Code::Blocks IDE (http://www.codeblocks.org/). Create a C++ project (console project) inside the IDE and add the files. Please make sure that `global.cpp` file has been added under `Build target files` in `Project > Properties > Build Targets`. The project can be built and run using `F9` key.  
 
 # Output Explanation
-The output will contain `World State` vector and `Covariance Matrix`. It can be seen that diagonal elements at row 4 and row 5 are comparitively smaller than those in rows after them. The robot used its motion model and dummy values to update its pose. There are dummy observation values set for the first landmark as well. Hence, the observation model was able to reduce uncertainity corresponding to this observation, reducing the diagonal values in row 4 and row 5. 
+The output will contain `World State` vector and `Covariance Matrix`. It can be seen that diagonal elements at row 4 and row 5 are comparitively smaller than those in rows after them. The robot used its motion model and dummy values to update its pose. There are dummy observation values set for the first landmark as well. Hence, the observation model was able to reduce uncertainity corresponding to this observation, reducing the diagonal values in row 4 and row 5. The idea is that, as the code runs more loops on an actual robot, with real sensor observations and odometry / velocity values, the EKF SLAM will be able to reduce the very high uncertainities represented in the `Covariance Matrix`. This will improve the robot pose and landmark position estimate provided in the `World State` vector.
 
 # Authors
 Author: Syamprasad K Rajagopalan  
