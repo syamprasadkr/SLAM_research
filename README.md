@@ -1,5 +1,5 @@
 # Simultaneous Localization and Mapping - Research
-This is a github repo for research on SLAM Algorithms. This is a 2 credit research, undertaken as part of MS in Robotics Engineering program, at Worcester Polytechnic Institute. This work is part of a bigger project and cannot be considered complete. The folder `dr_report` contains further details.
+This is a github repo for research on SLAM Algorithms. This is a 2 credit research, undertaken as part of MS in Robotics Engineering program, at Worcester Polytechnic Institute. This work is part of a bigger project and cannot be considered complete. The folder `dr_report` contains a **pdf report** which explains the work undertaken so far
 
 The objective was to develop an understanding of how SLAM works. Initially, an existing ROS package `tum_ardrone` was implemented on a Parrot ArDrone UAV. This implementation helped in understanding the expected output from SLAM. A map of 3D features, with the estimated path of the UAV, was created; it was visualized using  `PTAM Drone Map View`, available in the package. The `PTAM Drone Camera Feed` (part of the package), showed the camera feed along with the 3D features. The next attempt was to create a basic EKF SLAM Architecture in C++. The code in this repo uses dummy values for robot pose and sensor observations to simulate EKF SLAM thorugh one loop. 
 
